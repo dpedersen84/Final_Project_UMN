@@ -30,11 +30,11 @@ npm start
 
 ## Contributors
 
-Dan Pedersen
-Doreen Sheen
-Heidi Larson
-Olivia Graham
-Kevin Widmer
+* Dan Pedersen
+* Doreen Sheen
+* Heidi Larson
+* Olivia Graham
+* Kevin Widmer
 
 ## Built With
 
