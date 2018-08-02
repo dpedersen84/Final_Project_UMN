@@ -14,21 +14,19 @@ class Nav extends React.Component {
     
     componentDidMount = () => {
         this.getUsers();
-    }
+    };
     
-    getUsers() {
+    getUsers= () => {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
         axios.get(`/api/photo/users/${localStorage.getItem('userId')}`)
         .then(res => {
             const user = res.data;
             this.setState({ user: user });
-            console.log(user, "user data");
-            // console.log(this.state.user)
-            const mappingFunction = p => p.profileUrl;
-            // const url = ((this.state.user).map(mappingFunction));
-            this.setState({ profilePic: (this.state.user).map(mappingFunction)})
-        })
-    }
+            // console.log(user, "user data");
+            // console.log(user.map(user => user.profileUrl))
+            this.setState({ profilePic: (user.map(user => user.profileUrl))})
+        });
+    };
 
     render(props) {
         return (
@@ -41,9 +39,6 @@ class Nav extends React.Component {
                         <button type="button" className="btn btn-light btn-nav" aria-label="Globe"><a href="/global">
                             <i className="fas fa-globe-americas"></i></a>
                         </button>
-                        {/* <button type="button" class="btn btn-light btn-nav" aria-label="Users">
-                            <i class="fas fa-users"></i>
-                        </button> */}
                         <button type="button" className="btn btn-light btn-nav" aria-label="User"><a href="/dashboard">
                             <i className="fas fa-user-circle"></i></a>
                         </button>
@@ -55,9 +50,7 @@ class Nav extends React.Component {
             </nav>
             </div>
         )
-    }
-
-
+    };
 };
 
 export default Nav;

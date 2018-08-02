@@ -18,9 +18,6 @@ const UserSchema = new Schema({
         type: String,
         require: false,
         unique: false
-    },
-    likedPhotos:{
-        type: []
     }
 });
 
