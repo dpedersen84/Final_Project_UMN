@@ -1,6 +1,4 @@
 const express = require("express");
-// const passport = require("passport");
-// require("./config/passport");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
@@ -33,7 +31,6 @@ if (process.env.NODE_ENV === "production") {
 // Routes
 const photo = require('./routes/photos');
 const auth = require('./routes/auth');
-// app.use('/api/photo', passport.authenticate('jwt', {session: false}), photo);
 app.use('/api/photo', photo);
 app.use('/api/auth', auth);
 

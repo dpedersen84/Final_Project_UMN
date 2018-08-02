@@ -130,33 +130,43 @@ class Global extends Component {
 
     render() {
         return (
-
             <div className="container">
-
                 <Nav onClick={() => this.logout()} />
-                <h1>Global Leaderboard</h1>
-                {this.state.allImages
-                    .sort((a, b) => b.usersWhoLiked.length - a.usersWhoLiked.length)
-                    .map(image => (
-                    <ImageCard
-                        id={image._id}
-                        key={image._id}
-                        photo={image.url}
-                        user={image.user}
-                        likes={image.usersWhoLiked.length}
-                        caption={image.caption}
-                        liked="false"
-                        usersWhoLiked={image.usersWhoLiked}
-                        // onClick={this.handleLikeClick.bind(this)}
-                        handleLikeClick={this.handleLikeClick}
-                    />
-                    /* <CommentForm 
-                        onClick={this.handleCommentAdd}
-                        name="comment"
-                        value={this.state.comment}
-                        onChange={this.handleInputChange}
-                    /> */
-                ))}
+
+                <div className="row">
+                    <div className="col-xs-1 col-md-7 offset-md-4">
+                        <h1>Global Leaderboard</h1>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-xs-1 col-md-6 offset-md-3">
+                        {this.state.allImages
+                            .sort((a, b) => b.usersWhoLiked.length - a.usersWhoLiked.length)
+                            .map(image => (
+                            <ImageCard
+                                id={image._id}
+                                key={image._id}
+                                photo={image.url}
+                                user={image.user}
+                                likes={image.usersWhoLiked.length}
+                                caption={image.caption}
+                                liked="false"
+                                usersWhoLiked={image.usersWhoLiked}
+                                // onClick={this.handleLikeClick.bind(this)}
+                                handleLikeClick={this.handleLikeClick}
+                            />
+                            /* <CommentForm 
+                                onClick={this.handleCommentAdd}
+                                name="comment"
+                                value={this.state.comment}
+                                onChange={this.handleInputChange}
+                            /> */
+                            ))
+                        }
+                    </div>
+                </div>
+                
             </div> 
         );
     };
