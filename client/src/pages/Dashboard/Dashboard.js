@@ -95,27 +95,45 @@ class Dashboard extends Component {
         return (
             <div className="container">
                 <Nav onClick={() => this.logout()} />
-                <h1>{this.state.user}'s Photo of the Day</h1>
-                <ImageCard 
-                    photo={this.state.mostRecentUserImage.url}
-                    caption={this.state.mostRecentUserImage.caption}
-                    likes={this.state.mostRecentUserImage.likes}
-                    user="YOU !"
-                    handleLikeClick={this.handleLikeClick}
-                />
-                <form> 
-                    <h5>Update Caption Here</h5>
-                    <Input
-                        value={this.state.caption}
-                        onChange={this.handleInputChange}
-                    />
-                    <FormBtn 
-                        disabled={!(this.state.caption)}
-                        onClick={this.handleFormSubmit}    
-                    >
-                        Submit
-                    </FormBtn>
-                </form>
+
+                <div className="row">
+                    <div className="col-xs-1 col-md-7 offset-md-3">
+                        <h1>{this.state.user}'s Photo of the Day</h1>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-xs-1 col-md-6 offset-md-3">
+                        <ImageCard 
+                            photo={this.state.mostRecentUserImage.url}
+                            caption={this.state.mostRecentUserImage.caption}
+                            likes={this.state.mostRecentUserImage.likes}
+                            user="YOU !"
+                            handleLikeClick={this.handleLikeClick}
+                        />
+                    </div>
+                </div>
+                <br></br>
+                <div className="row">
+                    <div className="col-xs-1 col-md-6 offset-md-3">
+                        <h1>{this.state.mostRecentUserImage.caption}</h1>
+                        <form> 
+                            <Input
+                                value={this.state.caption}
+                                onChange={this.handleInputChange}
+                                placeholder="Update Caption"
+                            />
+                            <FormBtn 
+                                disabled={!(this.state.caption)}
+                                onClick={this.handleFormSubmit}    
+                            >
+                                Submit
+                            </FormBtn>
+                        </form>
+                    </div>
+                </div>
+                
+                
                 
             </div> 
         );
