@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import "./Login.css"
-import Alert from "../../components/Alert"
+import Alert from "../../components/Alert";
 import TitleOnly from "../../components/TitleOnly";
+import "./Login.css";
 
   class Login extends Component {
 
@@ -90,7 +90,7 @@ import TitleOnly from "../../components/TitleOnly";
               <br></br>
               {!this.state.isHidden && <Alert />}
               <br></br>
-              <h6>Don't have an account yet? <a href="/newuser"id="link">Create an account now!</a></h6>
+              <h6>Don't have an account yet? <a href="/register" id="link">Create an account now!</a></h6>
           </form>
         </div>
       )

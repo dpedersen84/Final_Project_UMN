@@ -2,7 +2,7 @@ import React from "react";
 import "./Title.css";
 
 const Title = (props) => (
-    <nav className="navbar" className="Nav">
+    <nav className="navbar nav">
         <div className="container row">
             <div className="text-left col-8">
                 <h1 id="title" >PicMe</h1>

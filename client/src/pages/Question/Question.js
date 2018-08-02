@@ -169,7 +169,7 @@ class Question extends Component {
                 console.log(res);
             })
 
-        this.props.history.push("/userpage");
+        this.props.history.push("/dashboard");
     };
     
     render() {

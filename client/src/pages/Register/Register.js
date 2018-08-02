@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import axios from 'axios';
 import TitleOnly from "../../components/TitleOnly";
 import Uploader from "../../components/Uploader/Uploader";
-import "./NewUser.css"
+import "./Register.css"
 
-class NewUser extends Component {
+class Register extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -77,4 +77,4 @@ class NewUser extends Component {
     }
   }
 
-export default NewUser;
+export default Register;

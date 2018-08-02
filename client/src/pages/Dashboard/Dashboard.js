@@ -4,9 +4,9 @@ import Nav from "../../components/Nav";
 import ImageCard from "../../components/ImageCard/ImageCard";
 import { Input, FormBtn } from "../../components/Form";
 // import CommentForm from "../../components/CommentForm";
-import './UsersPage.css';
+import './Dashboard.css';
 
-class UsersPage extends Component {
+class Dashboard extends Component {
 
     state = {
         userImages: [ ],
@@ -122,4 +122,4 @@ class UsersPage extends Component {
     };
 };
 
-export default UsersPage;
+export default Dashboard;
