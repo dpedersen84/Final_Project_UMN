@@ -63,7 +63,7 @@ class Global extends Component {
             this.setState({allImages:this.state.allImages});
         })
     
-       
+
     };
 
 
@@ -118,7 +118,6 @@ class Global extends Component {
         axios.get('/api/photo')
             .then(res => {
                 console.log(res.data)
-               // let sortedData = 
                 this.setState({allImages: res.data})
             })
     };
@@ -139,7 +138,6 @@ class Global extends Component {
                 {this.state.allImages
                     .sort((a, b) => b.usersWhoLiked.length - a.usersWhoLiked.length)
                     .map(image => (
-
                     <ImageCard
                         id={image._id}
                         key={image._id}
@@ -158,12 +156,10 @@ class Global extends Component {
                         value={this.state.comment}
                         onChange={this.handleInputChange}
                     /> */
-                ))}
-
+                ))};
             </div> 
         );
     };
-
 };
 
 export default Global;
