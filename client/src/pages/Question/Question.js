@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 // import Nav from "../../components/Nav";
+import ImageCard from "../../components/ImageCard";
 import questions from "../../utils/Questions.json";
 import moment from "moment";
 import axios from 'axios';
@@ -150,7 +151,7 @@ class Question extends Component {
 
     handleShareButton = () => {
 
-        let photoObject = {
+        let imageObject = {
             url: this.state.photo,
             caption: this.state.search,
             user: this.state.user,
@@ -159,11 +160,11 @@ class Question extends Component {
             date: this.state.currentDate
         };
 
-        console.log(photoObject);
+        console.log(imageObject);
 
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 
-        axios.post('/api/photo', photoObject)
+        axios.post('/api/images', imageObject)
             .then(res => {
             
                 console.log(res);
@@ -175,60 +176,57 @@ class Question extends Component {
     render() {
         return (
             <div className="container">
-                {/* <Nav onClick={() => this.logout()} /> */}
-                {/* <h1 className="clock">{this.state.time}</h1> */}
-                <h2 className="clock">{this.state.currentDate}</h2>
-                <h3 className="timer">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!
-                </h3>
-                    <p>
-                        {this.state.currentQ}
-                    </p>
-                <div>
-                    <form>
-                        <label>
-                            <input 
-                                type="text" 
-                                name="search"
-                                className="form-control"
-                                id="answer"
-                                placeholder="Answer"
-                                value={this.state.search}
-                                onChange={this.handleInputChange}
-                            />
-                        </label>
-                        <button
-                            className="btn btn-danger"
-                            id="getGif"
-                            disabled={!(this.state.search)}
-                            onClick={this.handleFormSubmit}>
-                            Search
-                        </button>  
-                    </form>
+                <div className="row">
+                    <div className="col-xs-1 col-md-7 offset-md-3">
+                        <h3 className="clock">{this.state.currentDate}</h3>
+                        <h4 className="timer">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</h4>
+                        <h5 className="currentQuestion"> {this.state.currentQ} </h5>
+                    </div>
+                </div>
+                
+                <div className="row">
+                    <div className="col-xs-1 col-md-7 offset-md-3">
+                        <form>
+                            <label>
+                                <input 
+                                    type="text" 
+                                    name="search"
+                                    className="form-control"
+                                    id="answer"
+                                    placeholder="Answer"
+                                    value={this.state.search}
+                                    onChange={this.handleInputChange}
+                                />
+                            </label>
+                            <button
+                                className="btn btn-danger"
+                                id="getGif"
+                                disabled={!(this.state.search)}
+                                onClick={this.handleFormSubmit}>
+                                Search
+                            </button>  
+                        </form>
+                    </div>
                 </div>
 
-                <div>
-                    <img
-                        alt="404 Please Search Again"
-                        src={this.state.photo}
-                    />
+                <div className="row">
+                    <div className="col-xs-1 col-md-7 offset-md-3">
+                        <ImageCard 
+                            photo={this.state.photo}
+                        />
+                    </div>
                 </div>
-                    {/* <form>
-                        <label> Answer:
-                        <input type="text" name="name" />
-                        </label>
-                    </form>
-                <button id="getDaily">Get Daily</button> */}
 
-                {/* <div className="Randomize">
-                    <button className="btn btn-danger btn-lg" id="randomize-btn" onClick={this.handleFormSubmit}>Randomize</button>
-                </div> */}
-                <div className="Share">
-                    <button className="btn btn-danger btn-lg" id="share-btn" onClick={this.handleShareButton}>Share </button>
+                <div className="row">
+                    <div className="col-xs-1 col-md-7 offset-md-3">
+                        <div>
+                            <button className="btn btn-danger btn-lg" id="share-btn" onClick={this.handleShareButton}>Share </button>
+                        </div>
+                        <div>
+                            <button className="btn btn-danger btn-lg" id="noshare-btn" onClick={() =>{this.props.history.push("/global")}}>Not Today</button>
+                        </div>
+                    </div>
                 </div>
-                <div className="Noshare">
-                    <button className="btn btn-danger btn-lg" id="noshare-btn" onClick={() =>{this.props.history.push("/global")}}>Not Today</button>
-                </div>
-                {/*<button onClick={this.randomQuestion.bind(this)}>New Question</button>*/}
             </div>
         )};
 }

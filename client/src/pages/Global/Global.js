@@ -140,7 +140,7 @@ class Global extends Component {
                 </div>
 
                 <div className="row">
-                    <div className="col-xs-1 col-md-6 offset-md-3">
+                    {/* <div className="col-xs-1 col-md-6 offset-md-3"> */}
                         {this.state.allImages
                             .sort((a, b) => b.usersWhoLiked.length - a.usersWhoLiked.length)
                             .map(image => (
@@ -164,7 +164,7 @@ class Global extends Component {
                             /> */
                             ))
                         }
-                    </div>
+                    {/* </div> */}
                 </div>
                 
             </div> 
