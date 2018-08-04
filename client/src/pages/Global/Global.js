@@ -27,7 +27,7 @@ class Global extends Component {
         this.setState({userName: localStorage.getItem('userName')})
         this.setState({userId: localStorage.getItem('userId')})
         
-        this.getAllPhotos();
+        this.getAllImages();
     };
 
     handleLikeClick = id => {
@@ -49,7 +49,7 @@ class Global extends Component {
 
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 
-        axios.put('/api/photo/likes/' + id, user)
+        axios.put('/api/images/likes/' + id, user)
         .then((result) => {
             
             let updatedImageIndex =  this.state.allImages.findIndex(function(i) { 
@@ -76,7 +76,7 @@ class Global extends Component {
         this.setState( { imageId: this.state.mostRecentUserImage._id }, () => {
             // console.log(this.state)
 
-            const url = `/api/photo/${this.state.imageId}/comments`;
+            const url = `/api/images/${this.state.imageId}/comments`;
             // console.log(url)
     
             axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
@@ -107,15 +107,15 @@ class Global extends Component {
 
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 
-        axios.post(`/api/photo/${this.state.imageId}/comments`, commentObject)
+        axios.post(`/api/images/${this.state.imageId}/comments`, commentObject)
             .then(res => {
                 console.log(res);
             })
     };
 
-    getAllPhotos = () => {
+    getAllImages = () => {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-        axios.get('/api/photo')
+        axios.get('/api/images')
             .then(res => {
                 console.log(res.data)
                 this.setState({allImages: res.data})

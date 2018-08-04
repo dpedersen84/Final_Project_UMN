@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const passport = require('passport');
 const settings = require('../config/settings');
 require('../config/passport')(passport);
@@ -17,7 +16,7 @@ router.post('/register', (req, res) => {
         const newUser = new User({
             userName: req.body.userName,
             password: req.body.password,
-            profileUrl: req.body.profileUrl
+            profileUrl: req.body.profileUrl,
         });
     User.create(newUser)
         .then((err, dbNote) => {
@@ -54,16 +53,17 @@ router.post('/login', (req, res) => {
     });
 });
 
-// router.get('/users/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-//     const token = getToken(req.headers);
-//     if (token) {
-//         User.find({_id: req.params.id }, (err, UserData) => {
-//             console.log("UserData: " + UserData)
-//             res.json(UserData)
-//         });
-//     } else {
-//         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
-//     }    
-// })
+// Get user profile picture
+router.get('/users/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    const token = getToken(req.headers);
+    if (token) {
+        User.find({_id: req.params.id }, (err, userData) => {
+            console.log("UserData: " + userData)
+            res.json(userData)
+        });
+    } else {
+        return res.status(403).send({ success: false, msg: 'Unauthorized.' });
+    }    
+});
 
 module.exports = router;

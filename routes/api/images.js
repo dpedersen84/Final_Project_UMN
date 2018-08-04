@@ -1,50 +1,51 @@
 const express = require('express');
 const router = express.Router();
-const Photo = require('../models/Photo.js');
-const User = require("../models/User");
-const Comment = require('../models/Comment.js');
+const Image = require("../../models/Image")
+// const User = require("../models/User");
+// const Comment = require('../models/Comment.js');
 const passport = require('passport');
-require('../config/passport')(passport);
+require('../../config/passport')(passport);
 
-// Get all photos
+// The following routes match with "/api/images"
+// Get all images
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
     var token = getToken(req.headers);
     if (token) {
-        console.log("=== Getting All Photos ===")
-        Photo
+        console.log("=== Getting All Images ===")
+        Image
         .find(req.query)
         // .sort({ likes: -1 })
-        .then(photos => res.json(photos))
+        .then(images => res.json(images))
     } else {
         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
     }
 });
 
-// Save photo
+// Save image
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     var token = getToken(req.headers);
     if (token) {
-        Photo.create(req.body, (err, post) => {
-            console.log("==== Save Photo ====")
+        Image.create(req.body, (err, image) => {
+            console.log("==== Save Image ====")
             // console.log(req.body);
             if (err) return next(err);
-            res.json(post);
+            res.json(image);
         });
     } else {
         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
     }
 });
 
-// Edit photo
+// Edit image
 router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     var token = getToken(req.headers);
     // console.log(req.body)
     if (token) {
-        Photo.findOneAndUpdate({ _id: req.params.id }, req.body, (err, photo) => {
-            console.log("=== Updating Photo ===")
+        Image.findOneAndUpdate({ _id: req.params.id }, req.body, (err, image) => {
+            console.log("=== Updating Image ===")
                 if (err) return next(err);
 
-                res.json(photo)
+                res.json(image)
             
 
         })
@@ -53,24 +54,24 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res, 
     }
 });
 
-//Edit photo likes
+//Edit image likes
 router.put('/likes/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     var token = getToken(req.headers);
     // console.log(req.body)
     if (token) {
-        Photo.findOneAndUpdate({ _id: req.params.id }, {$push: {usersWhoLiked: req.body}}, (err, photo) => {
-        // Photo.findOneAndUpdate({ _id: req.params.id }, {$inc: {likes: req.body}}, (err, photo) => {
+        Image.findOneAndUpdate({ _id: req.params.id }, {$push: {usersWhoLiked: req.body}}, (err, image) => {
+        // Image.findOneAndUpdate({ _id: req.params.id }, {$inc: {likes: req.body}}, (err, Image) => {
             console.log("=== Updating Users Who Liked ===")
                 if (err) return next(err);
 
-                res.json(photo)
+                res.json(image)
         })
         // .then(() => {
-        //     Photo.findOneAndUpdate({_id: req.params.id } , req.body, (err, photo) => {
+        //     Image.findOneAndUpdate({_id: req.params.id } , req.body, (err, Image) => {
         //         console.log("=== Updating Like Amount ===")
         //             if (err) return next(err);
 
-        //             res.json(photo)
+        //             res.json(Image)
         //     })
         // })
     } else {
@@ -78,27 +79,27 @@ router.put('/likes/:id', passport.authenticate('jwt', { session: false }), (req,
     }
 });
 
-// Get User photos
+// Get User images
 router.get('/:userId', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     var token = getToken(req.headers);
     if (token) {
-        Photo.find({userId: req.params.userId }, (err, photos) => {
-            console.log("=== Get User Photos ===")
-            // console.log(photos);
+        Image.find({userId: req.params.userId }, (err, images) => {
+            console.log("=== Get User Images ===")
+            // console.log(Images);
             if (err) return next(err);
-            res.json(photos);
+            res.json(images);
         });
     } else {
         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
     }
 });
 
-// Get all photo comments
+// Get all image comments
 router.get('/:id/comments', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     var token = getToken(req.headers);
     if (token) {
         console.log("=== Get Comments ===")
-        Photo.find({_id: req.params.id})
+        Image.find({_id: req.params.id})
         .populate('comments')
         .then(comments => {
             // console.log(comments);
@@ -109,17 +110,17 @@ router.get('/:id/comments', passport.authenticate('jwt', { session: false }), (r
     }
 });
 
-// Save comment to photo
+// Save comment to image
 router.post('/:id/comments', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     var token = getToken(req.headers);
     if (token) {
         console.log("=== Save Comments ===");
         Comment.create(req.body)
         .then(dbComment => {
-            return Photo.findOneAndUpdate({_id: req.params.id}, {$push: {comments: dbComment._id}}, {new: true})
+            return Image.findOneAndUpdate({_id: req.params.id}, {$push: {comments: dbComment._id}}, {new: true})
         })
-        .then(dbPhoto => {
-            res.json(dbPhoto);
+        .then(dbImage => {
+            res.json(dbImage);
         });
     } else {
         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
@@ -152,18 +153,18 @@ router.delete('/:id/comments', passport.authenticate('jwt', { session: false }),
     }
 });
 
-// Get user profile picture
-router.get('/users/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-    const token = getToken(req.headers);
-    if (token) {
-        User.find({_id: req.params.id }, (err, UserData) => {
-            console.log("UserData: " + UserData)
-            res.json(UserData)
-        });
-    } else {
-        return res.status(403).send({ success: false, msg: 'Unauthorized.' });
-    }    
-});
+// // Get user profile picture
+// router.get('/users/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+//     const token = getToken(req.headers);
+//     if (token) {
+//         User.find({_id: req.params.id }, (err, UserData) => {
+//             console.log("UserData: " + UserData)
+//             res.json(UserData)
+//         });
+//     } else {
+//         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
+//     }    
+// });
 
 getToken = headers => {
     if (headers && headers.authorization) {

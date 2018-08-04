@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const routes = require("./routes");
 const path = require("path");
 mongoose.Promise = require("bluebird");
 
@@ -29,10 +30,11 @@ if (process.env.NODE_ENV === "production") {
 // });
 
 // Routes
-const photo = require('./routes/photos');
-const auth = require('./routes/auth');
-app.use('/api/photo', photo);
-app.use('/api/auth', auth);
+// const photo = require('./routes/photos');
+// const auth = require('./routes/auth');
+// app.use('/api/photo', photo);
+// app.use('/api/auth', auth);
+app.use(routes);
 
 // Connect to the Mongo database
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/PicMedb";

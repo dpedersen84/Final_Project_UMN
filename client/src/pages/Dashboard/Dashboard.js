@@ -32,7 +32,7 @@ class Dashboard extends Component {
 
     getUserImages = () => {
 
-        const url = `/api/photo/${localStorage.getItem('userId')}`;
+        const url = `/api/images/${localStorage.getItem('userId')}`;
 
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 
@@ -68,7 +68,7 @@ class Dashboard extends Component {
 
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
 
-        axios.put(`/api/photo/${this.state.mostRecentUserImage._id}`, captionObject)
+        axios.put(`/api/images/${this.state.mostRecentUserImage._id}`, captionObject)
             .then(res => {
                 console.log(res);
             })
