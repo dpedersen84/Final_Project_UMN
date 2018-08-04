@@ -18,7 +18,7 @@ class Nav extends React.Component {
     
     getUsers= () => {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
-        axios.get(`/api/photo/users/${localStorage.getItem('userId')}`)
+        axios.get(`/api/auth/users/${localStorage.getItem('userId')}`)
         .then(res => {
             const user = res.data;
             this.setState({ user: user });

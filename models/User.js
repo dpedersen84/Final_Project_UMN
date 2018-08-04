@@ -18,6 +18,13 @@ const UserSchema = new Schema({
         type: String,
         require: false,
         unique: false
+    },
+    created: {
+        type: Date,
+        default: Date.now()
+    },
+    deleted: {
+        type: Date,
     }
 });
 
