@@ -41,6 +41,6 @@ npm start
 * [Express](https://expressjs.com/) - node.js routing
 * [MongoDB](https://www.mongodb.com/) - database
 * [Mongoose](http://mongoosejs.com/) - database modeling
-* [React] (http://reactjs.org) - front end design
-* [Passport] (http://passportjs.org) - node.js authentication
-* [Uploadcare] (https://uploadcare.com) - file uploader
+* [React](http://reactjs.org) - front end design
+* [Passport](http://passportjs.org) - node.js authentication
+* [Uploadcare](https://uploadcare.com) - file uploader
