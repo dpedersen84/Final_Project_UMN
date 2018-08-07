@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-// import Nav from "../../components/Nav";
+import Nav from "../../components/Nav";
+import Navbar from "../../components/Navbar";
 import ImageCard from "../../components/ImageCard";
 import questions from "../../utils/Questions.json";
 import moment from "moment";
@@ -14,7 +15,7 @@ class Question extends Component {
         time: new Date().toLocaleString(),
         currentDate: moment(new Date()).format("M/DD/YYYY"),
         search:"",
-        photo: "https://vignette.wikia.nocookie.net/uncyclopedia/images/0/01/DramaticQuestionMark.png/revision/latest?cb=20060419021703",
+        photo: "",
         days: 0,
         hours: 0,
         min: 0,
@@ -24,11 +25,11 @@ class Question extends Component {
     };
 
     getDayOfYear = () => {
-        var now = new Date();
-        var start = new Date(now.getFullYear(), 0, 0);
-        var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
-        var oneDay = 1000 * 60 * 60 * 24;
-        var day = Math.floor(diff / oneDay);
+        let now = new Date();
+        let start = new Date(now.getFullYear(), 0, 0);
+        let diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+        let oneDay = 1000 * 60 * 60 * 24;
+        let day = Math.floor(diff / oneDay);
         return day
     };
 
@@ -175,12 +176,16 @@ class Question extends Component {
     
     render() {
         return (
+            // <div>
+            // <Navbar />
+            
             <div className="container">
+            <Nav onClick={() => this.logout()} />
                 <div className="row">
                     <div className="col-xs-1 col-md-7 offset-md-3">
-                        <h3 className="clock">{this.state.currentDate}</h3>
-                        <h4 className="timer">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</h4>
-                        <h5 className="currentQuestion"> {this.state.currentQ} </h5>
+                        {/* <h5 className="clock">{this.state.currentDate}</h5>
+                        <h5 className="timer">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</h5> */}
+                        <h1 className="currentQuestion"> {this.state.currentQ} </h1>
                     </div>
                 </div>
                 
@@ -200,7 +205,7 @@ class Question extends Component {
                             </label>
                             <button
                                 className="btn btn-danger"
-                                id="getGif"
+                                id="getImage"
                                 disabled={!(this.state.search)}
                                 onClick={this.handleFormSubmit}>
                                 Search
@@ -210,7 +215,7 @@ class Question extends Component {
                 </div>
 
                 <div className="row">
-                    <div className="col-xs-1 col-md-7 offset-md-3">
+                    <div className="col-xs-1 col-md-7 offset-md-3" id="imageCard">
                         <ImageCard 
                             photo={this.state.photo}
                         />
@@ -227,7 +232,18 @@ class Question extends Component {
                         </div>
                     </div>
                 </div>
+
+                <div className="row">
+                    <div className="col-xs-1 col-md-3 offset-md-9">
+                        <div className="container" id="timerbox">
+                        <p className="clock">{this.state.currentDate}</p>
+                        <p className="timer">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</p>
+                        {/* <h5 className="currentQuestion"> {this.state.currentQ} </h5> */}
+                        </div>
+                    </div>
+                </div>
             </div>
+            // </div>
         )};
 }
 

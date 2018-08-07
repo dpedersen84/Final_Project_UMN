@@ -1,12 +1,33 @@
 #randomize-btn, #share-btn, #noshare-btn {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   width: 125px;
 }
 
-#getGif {
-  margin-left: 8px;
+#getImage {
+  margin-left: 10px;
 }
 
 #share-btn {
-  margin-top: 8px;
+  margin-top: 10px;
 }
+
+#timerbox {
+  font-family: 'Open Sans Condensed', sans-serif;
+  padding-top: 13px;
+  text-align: center;
+  border-radius: 5px;
+  border-color: black;
+  border-style: solid;
+}
+
+.currentQuestion {
+  margin-bottom: 25px;
+}
+
+form, #imageCard {
+  margin-bottom: 15px;
+}
+
+/* #imageCard {
+  margin-bottom: 10px;
+} */

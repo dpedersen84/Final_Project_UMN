@@ -134,7 +134,7 @@ class Global extends Component {
                 <Nav onClick={() => this.logout()} />
 
                 <div className="row">
-                    <div className="col-xs-1 col-md-7 offset-md-4">
+                    <div className="col-xs-1 col-md-6 offset-md-4">
                         <h1>Global Leaderboard</h1>
                     </div>
                 </div>
