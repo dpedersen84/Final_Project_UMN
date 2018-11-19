@@ -19,12 +19,8 @@ const UserSchema = new Schema({
         require: false,
         unique: false
     },
-    created: {
-        type: Date,
-        default: Date.now()
-    },
-    deleted: {
-        type: Date,
+    likedPhotos:{
+        type: []
     }
 });
 

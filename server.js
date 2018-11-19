@@ -1,8 +1,9 @@
 const express = require("express");
+const passport = require("passport");
+require("./config/passport");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-const routes = require("./routes");
 const path = require("path");
 mongoose.Promise = require("bluebird");
 
@@ -21,20 +22,21 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client/build/index.html'), (err) => {
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'client/build/index.html'), function(err) {
 //     if (err) {
-//       res.status(500).send({err, msg: "500 Error!"});
+//       res.status(500).send(err);
 //     }
 //   });
 // });
 
 // Routes
-// const photo = require('./routes/photos');
-// const auth = require('./routes/auth');
-// app.use('/api/photo', photo);
-// app.use('/api/auth', auth);
-app.use(routes);
+const photo = require('./routes/photos');
+const auth = require('./routes/auth');
+
+app.use('/api/images', passport.authenticate('jwt', {session: false}), photo);
+
+app.use('/api/auth', auth);
 
 // Connect to the Mongo database
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/PicMedb";

@@ -1,4 +1,4 @@
 module.exports = {
-    Photo: require ("./Image"),
+    Photo: require ("./Photo"),
     User: require ("./User"),
 }

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema; 
 
-const ImageSchema = new Schema({
+const PhotoSchema = new Schema({
     url: {
         type: String, 
         require: true
@@ -40,6 +40,6 @@ const ImageSchema = new Schema({
     ]
 });
 
-const Image = mongoose.model("Image", ImageSchema);
+const Photo = mongoose.model("Photo", PhotoSchema);
 
-module.exports = Image; 
+module.exports = Photo; 
