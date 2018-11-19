@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const passport = require('passport');
 const settings = require('../config/settings');
 require('../config/passport')(passport);
@@ -16,7 +17,7 @@ router.post('/register', (req, res) => {
         const newUser = new User({
             userName: req.body.userName,
             password: req.body.password,
-            profileUrl: req.body.profileUrl,
+            profileUrl: req.body.profileUrl
         });
     User.create(newUser)
         .then((err, dbNote) => {
@@ -43,8 +44,14 @@ router.post('/login', (req, res) => {
                 if (isMatch && !err) {
                     // if user is found and password is right create a token
                     const token = jwt.sign(user.toJSON(), settings.secret);
+                    
                     // return the information including token as JSON
-                    return res.json({success: true, token: 'JWT ' + token, userName: req.body.userName, userId: user._id});
+                    return res.json({
+                        success: true, 
+                        token: 'JWT ' + token, 
+                        userName: req.body.userName, 
+                        userId: user._id,
+                    });
                 } else {
                     res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
                 }
@@ -53,17 +60,16 @@ router.post('/login', (req, res) => {
     });
 });
 
-// Get user profile picture
 router.get('/users/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     const token = getToken(req.headers);
     if (token) {
-        User.find({_id: req.params.id }, (err, userData) => {
-            console.log("UserData: " + userData)
-            res.json(userData)
+        User.find({_id: req.params.id }, (err, UserData) => {
+            console.log("UserData: " + UserData)
+            res.json(UserData)
         });
     } else {
         return res.status(403).send({ success: false, msg: 'Unauthorized.' });
     }    
-});
+})
 
 module.exports = router;
