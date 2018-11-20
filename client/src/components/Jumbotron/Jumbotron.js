@@ -7,7 +7,7 @@ class Jumbotron extends React.Component {
                 <div 
                     className="jumbotron" 
                     style={{ backgroundImage: `url(${this.props.backgroundImage})` }} >
-
+                    
                     {this.props.children}
                 </div>
         )

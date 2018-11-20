@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import axios from 'axios';
-import Nav from "../../components/Nav";
+import Jumbotron from '../../components/Jumbotron';
 import ImageCard from "../../components/ImageCard/ImageCard";
 
 class Global extends Component {
@@ -45,13 +45,15 @@ class Global extends Component {
 
     render() {
         return (
-            <div className="container">
-                <Nav onClick={() => this.logout()} />
-                {/* <div className="row">
-                    <div className="col-xs-1 col-md-6 offset-md-4">
-                        <h1>Global Leaderboard</h1>
+            <div>
+                <Jumbotron>
+                    <h1 className='text-center'>Welcome to the Global Leaderboard.</h1>&nbsp;
+                    <h4 className='text-center'>Here you will find the top-rated images of the day!</h4>&nbsp;
+                    <div className='text-center'>
+                        <button className="btn btn-primary" onClick= {() => window.location.href = '/question'}>Pick your image</button> 
                     </div>
-                </div> */}
+                </Jumbotron>
+                <div className="container">
                     {this.state.allImages.map(image => 
                         <div className="row" key={image._id}>
                             <div>    
@@ -66,7 +68,10 @@ class Global extends Component {
                             </div>
                         </div>
                     )}
-                </div>
+            </div>
+
+            </div>
+            
         );
     };
 };
