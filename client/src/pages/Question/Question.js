@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Nav from "../../components/Nav";
-import Navbar from "../../components/Navbar";
+// import Nav from "../../components/Nav";
+// import Navbar from "../../components/Navbar";
+import Jumbotron from "../../components/Jumbotron";
 import ImageCard from "../../components/ImageCard";
 import questions from "../../utils/Questions.json";
 import moment from "moment";
@@ -176,74 +177,64 @@ class Question extends Component {
     
     render() {
         return (
-            // <div>
-            // <Navbar />
-            
-            <div className="container">
-            <Nav onClick={() => this.logout()} />
-                <div className="row">
-                    <div className="col-xs-1 col-md-7 offset-md-3">
-                        {/* <h5 className="clock">{this.state.currentDate}</h5>
-                        <h5 className="timer">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</h5> */}
-                        <h1 className="currentQuestion"> {this.state.currentQ} </h1>
+            <div>
+                <Jumbotron>
+                    <h1 className='text-center'>Welcome to the Daily Question.</h1>&nbsp;
+                    <h4 className='text-center'>Here you will find the question of the day!</h4>&nbsp;
+                    <h4 className='text-center'>Answer quick! Question resets every 24 hours!</h4>&nbsp;
+                    {/* <p className="clock">{this.state.currentDate}</p> */}
+                    <p className="timer text-center">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</p>
+                </Jumbotron>
+                <div className="container">
+                {/* <Nav onClick={() => this.logout()} /> */}
+                    <div className="row">
+                        <div className="col-xs-1 col-md-12">
+                            {/* <h5 className="clock">{this.state.currentDate}</h5>
+                            <h5 className="timer">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</h5> */}
+                            <h1 className="currentQuestion"> {this.state.currentQ} </h1>
+                        </div>
                     </div>
-                </div>
-                
-                <div className="row">
-                    <div className="col-xs-1 col-md-7 offset-md-3">
-                        <form>
-                            <label>
-                                <input 
-                                    type="text" 
-                                    name="search"
-                                    className="form-control"
-                                    id="answer"
-                                    placeholder="Answer"
-                                    value={this.state.search}
-                                    onChange={this.handleInputChange}
+                    
+                    <div className="row">
+                        <div className="col-xs-1 col-md-7 offset-md-3">
+                            <form>
+                                <label>
+                                    <input 
+                                        type="text" 
+                                        name="search"
+                                        className="form-control"
+                                        id="answer"
+                                        placeholder="Answer"
+                                        value={this.state.search}
+                                        onChange={this.handleInputChange}
+                                    />
+                                </label>
+                                <button
+                                    className="btn btn-danger"
+                                    id="getImage"
+                                    disabled={!(this.state.search)}
+                                    onClick={this.handleFormSubmit}>
+                                    Search
+                                </button>  
+                            </form>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-xs-1 col-md-7 offset-md-3" id="imageCard">
+                            {this.state.photo.length ? 
+                            (<div>
+                                <ImageCard 
+                                    photo={this.state.photo} 
                                 />
-                            </label>
-                            <button
-                                className="btn btn-danger"
-                                id="getImage"
-                                disabled={!(this.state.search)}
-                                onClick={this.handleFormSubmit}>
-                                Search
-                            </button>  
-                        </form>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-xs-1 col-md-7 offset-md-3" id="imageCard">
-                        <ImageCard 
-                            photo={this.state.photo}
-                        />
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-xs-1 col-md-7 offset-md-3">
-                        <div>
-                            <button className="btn btn-danger btn-lg" id="share-btn" onClick={this.handleShareButton}>Share </button>
-                        </div>
-                        <div>
-                            <button className="btn btn-danger btn-lg" id="noshare-btn" onClick={() =>{this.props.history.push("/global")}}>Not Today</button>
+                                <button className="btn btn-danger btn-lg" id="share-btn" onClick={this.handleShareButton}>Share </button>
+                            </div>) : (<div></div>)
+                            } 
                         </div>
                     </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-xs-1 col-md-3 offset-md-9">
-                        <div className="container" id="timerbox">
-                        <p className="clock">{this.state.currentDate}</p>
-                        <p className="timer">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</p>
-                        {/* <h5 className="currentQuestion"> {this.state.currentQ} </h5> */}
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
-            // </div>
         )};
 }
 

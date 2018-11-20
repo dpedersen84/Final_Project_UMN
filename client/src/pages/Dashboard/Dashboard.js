@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import Nav from "../../components/Nav";
+// import Nav from "../../components/Nav";
+import Jumbotron from "../../components/Jumbotron";
 import ImageCard from "../../components/ImageCard/ImageCard";
 import { Input, FormBtn } from "../../components/Form";
 // import CommentForm from "../../components/CommentForm";
@@ -93,15 +94,21 @@ class Dashboard extends Component {
 
     render() {
         return (
+            <div>
+                <Jumbotron>
+                    <h1 className='text-center'>Welcome to your dashboard {this.state.user}!</h1>&nbsp;
+                    <h4 className='text-center'>Here you will find your chosen image of the day!</h4>&nbsp;
+                    <div className='text-center'>
+                        <button className="btn btn-primary" onClick= {() => window.location.href = '/question'}>Pick your image</button> 
+                    </div>
+                </Jumbotron>
             <div className="container">
-                <Nav onClick={() => this.logout()} />
-
+                {/* <Nav onClick={() => this.logout()} /> */}
                 <div className="row">
                     <div className="col-xs-1 col-md-7 offset-md-3">
                         <h1>{this.state.user}'s Photo of the Day</h1>
                     </div>
                 </div>
-
                 <div className="row">
                     <div className="col-xs-1 col-md-6 offset-md-3">
                         <ImageCard 
@@ -135,6 +142,7 @@ class Dashboard extends Component {
                 
                 
                 
+            </div>
             </div> 
         );
     };
