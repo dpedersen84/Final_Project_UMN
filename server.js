@@ -4,7 +4,6 @@ require("./config/passport");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-const path = require("path");
 mongoose.Promise = require("bluebird");
 
 // Port
@@ -22,20 +21,11 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// app.get('/*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client/build/index.html'), function(err) {
-//     if (err) {
-//       res.status(500).send(err);
-//     }
-//   });
-// });
-
 // Routes
 const photo = require('./routes/photos');
 const auth = require('./routes/auth');
 
 app.use('/api/images', passport.authenticate('jwt', {session: false}), photo);
-
 app.use('/api/auth', auth);
 
 // Connect to the Mongo database
