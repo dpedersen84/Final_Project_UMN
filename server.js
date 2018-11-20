@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const passport = require("passport");
 require("./config/passport");
 const bodyParser = require("body-parser");
@@ -19,7 +20,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
+
+  app.get('*', (request, response) => {
+    response.sendFile(path.join(__dirname, 'client/build/index.html'));
+  });
+
 }
+
 
 // Routes
 const photo = require('./routes/photos');
