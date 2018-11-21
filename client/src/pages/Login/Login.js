@@ -40,7 +40,7 @@ class Login extends Component {
         localStorage.setItem('jwtToken', result.data.token);
         localStorage.setItem('userId', result.data.userId);
         localStorage.setItem('userName', result.data.userName);        
-        this.props.history.push('/global');
+        window.location.href ="/dashboard"
       })
       .catch((error) => {
         if(error.response.status === 401) {

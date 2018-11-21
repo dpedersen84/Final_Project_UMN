@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import axios from 'axios';
 import Jumbotron from '../../components/Jumbotron';
@@ -8,69 +7,74 @@ class Global extends Component {
     constructor(props) {
         super(props);
         this.state = {
-                userName: '',
-                userId: '',
-                imageUrl: '',
-                allImages: [ ],
-                image: ''
+            userName: localStorage.getItem('userName'),
+            userId: localStorage.getItem('userId'),
+            token: localStorage.getItem('jwtToken'),
+            imageUrl: '',
+            allImages: [ ],
+            image: ''
         };
     };
 
     componentDidMount = () => {
-
-        if (localStorage.getItem('jwtToken')===null) {
-            this.props.history.push("/login");
+        if (localStorage.getItem('jwtToken')) {
+            console.log(localStorage);
+            axios.defaults.headers.common['Authorization'] = this.state.token;
+            this.getAllImages();
+        } else {
+            window.location.href ="/login"
         }
-
-        this.setState({userName: localStorage.getItem('userName')})
-        this.setState({userId: localStorage.getItem('userId')})
-        
-        this.getAllImages();
     };
 
     getAllImages = () => {
-        axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
         axios.get('/api/images')
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 this.setState({allImages: res.data})
             })
     };
 
-    logout = () => {
-        localStorage.removeItem('jwtToken');
-        window.location.href = "/"
-        console.log("Logout!")
-    };
-
     render() {
         return (
-            <div>
-                <Jumbotron>
-                    <h1 className='text-center'>Welcome to the Global Leaderboard.</h1>&nbsp;
-                    <h4 className='text-center'>Here you will find the top-rated images of the day!</h4>&nbsp;
-                    <div className='text-center'>
-                        <button className="btn btn-primary" onClick= {() => window.location.href = '/question'}>Pick your image</button> 
+            // <div>
+            //     <Jumbotron>
+            //         <h1 className='text-center'>Welcome to the Global Leaderboard.</h1>&nbsp;
+            //         <h4 className='text-center'>Here you will find the top-rated images of the day!</h4>&nbsp;
+            //         <div className='text-center'>
+            //             <button className="btn btn-primary" onClick= {() => window.location.href = '/question'}>Pick your image</button> 
+            //         </div>
+            //     </Jumbotron>
+                <div className="container" style={{marginTop: 100}}>
+                    <div className="row">
+                    <div className="col"></div>
+                    <div className="col-6">
+                        {this.state.allImages.map(image => 
+                            
+                                <div>
+                                    <h3>{image.user}</h3>    
+                                    <img
+                                        id={image._id}
+                                        className="img-fluid rounded mx-auto d-block"
+                                        key={image._id}
+                                        src={image.url}
+                                        user={image.user}
+                                        caption={image.caption}
+                                        style={{height: 500, width: 500}}
+                                    />
+                                    <div>
+                                    <button className="btn btn-primary">Likes <span class="badge badge-light">4</span></button>&nbsp;
+                                    <p><span style={{fontWeight: 'bold'}}>{image.user}</span> <span>{image.caption}</span></p>
+                                    </div>
+                                </div>
+                            
+                        )}
                     </div>
-                </Jumbotron>
-                <div className="container">
-                    {this.state.allImages.map(image => 
-                        <div className="row" key={image._id}>
-                            <div>    
-                                <ImageCard
-                                    id={image._id}
-                                    key={image._id}
-                                    photo={image.url}
-                                    user={image.user}
-                                    caption={image.caption}
-                                    handleLikeClick={this.handleLikeClick}
-                                />
-                            </div>
-                        </div>
-                    )}
+                    <div className="col"></div>
+
+                    </div>
             </div>
 
-            </div>
+            // </div>
             
         );
     };
