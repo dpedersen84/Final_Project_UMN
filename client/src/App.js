@@ -14,7 +14,7 @@ const App = () => (
     <Wrapper>
       <Navbar />
         <Switch>
-          <Route exact path="/" component={Global} />
+          <Route exact path="/" component={Dashboard} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/question" component={Question} />
