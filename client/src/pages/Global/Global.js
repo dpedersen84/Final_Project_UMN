@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import Jumbotron from '../../components/Jumbotron';
-import ImageCard from "../../components/ImageCard/ImageCard";
+// import Jumbotron from '../../components/Jumbotron';
+// import ImageCard from "../../components/ImageCard/ImageCard";
 
 class Global extends Component {
     constructor(props) {
@@ -50,19 +50,20 @@ class Global extends Component {
                     <div className="col-6">
                         {this.state.allImages.map(image => 
                             
-                                <div>
+                                <div key={image._id}>
                                     <h3>{image.user}</h3>    
                                     <img
                                         id={image._id}
                                         className="img-fluid rounded mx-auto d-block"
-                                        key={image._id}
+                                        
                                         src={image.url}
                                         user={image.user}
                                         caption={image.caption}
+                                        alt={image.caption}
                                         style={{height: 500, width: 500}}
                                     />
                                     <div>
-                                    <button className="btn btn-primary">Likes <span class="badge badge-light">4</span></button>&nbsp;
+                                    <button className="btn btn-primary">Likes <span className="badge badge-light">4</span></button>&nbsp;
                                     <p><span style={{fontWeight: 'bold'}}>{image.user}</span> <span>{image.caption}</span></p>
                                     </div>
                                 </div>

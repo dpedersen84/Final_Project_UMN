@@ -10,7 +10,9 @@ class Register extends Component {
       this.state = {
         userName: '',
         password: '',
-        profileUrl: 'https://vignette.wikia.nocookie.net/the-darkest-minds/images/4/47/Placeholder.png/revision/latest/scale-to-width-down/480?cb=20160927044640'
+        profileUrl: 'https://vignette.wikia.nocookie.net/the-darkest-minds/images/4/47/Placeholder.png/revision/latest/scale-to-width-down/480?cb=20160927044640',
+        firstName: '',
+        email: ''
       };
     };
 
@@ -21,7 +23,7 @@ class Register extends Component {
     };
 
     handleFileUpload = profileUrl => {
-      console.log("String");
+      // console.log("String");
       this.setState({profileUrl})
       console.log(profileUrl)
     }
@@ -29,10 +31,10 @@ class Register extends Component {
     handleFormSubmit = event => {
       event.preventDefault();
       
-      const { userName, password, profileUrl } = this.state;
-      console.log(userName, password, profileUrl);
+      const { userName, password, firstName, email, profileUrl } = this.state;
+      console.log(userName, password, email, firstName, profileUrl);
 
-      axios.post('/api/auth/register', { userName, password, profileUrl })
+      axios.post('/api/auth/register', { userName, password, profileUrl, firstName, email })
         .then((result) => {
           console.log(userName);
           console.log(password);
@@ -54,12 +56,20 @@ class Register extends Component {
           <br></br>
           <form>
               <div className="form-group">
-                  <label htmlFor="loginUsernameCreate">Enter New Username</label>
+                  <label htmlFor="loginUsernameCreate">Username</label>
                   <input name="userName" value={this.state.userName} onChange={this.handleInputChange("userName")} type="text" className="form-control" id="loginUsernameCreate" placeholder="" required></input>
               </div>
               <div className="form-group">
-                  <label htmlFor="loginPassword1Create">Enter New Password</label>
+                  <label htmlFor="loginPassword1Create">Password</label>
                   <input name="password1" value={this.state.password} onChange={this.handleInputChange("password")} type="password" className="form-control" id="loginPassword1Create" placeholder="" required></input>
+              </div>
+              <div className="form-group">
+                  <label htmlFor="loginNameCreate">First Name</label>
+                  <input name="password1" value={this.state.firstName} onChange={this.handleInputChange("firstName")} type="text" className="form-control" id="loginNameCreate" placeholder="" required></input>
+              </div>
+              <div className="form-group">
+                  <label htmlFor="loginEmailCreate">E-mail</label>
+                  <input name="password1" value={this.state.email} onChange={this.handleInputChange("email")} type="email" className="form-control" id="loginEmailCreate" placeholder="" required></input>
               </div>
 
               <div><img id="image-preview" src={this.state.profileUrl} alt="alt"></img></div>
