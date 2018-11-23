@@ -5,6 +5,7 @@ require("./config/passport");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 // Port
 const PORT = process.env.PORT || 3001;
@@ -13,9 +14,15 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Configure middleware
+app.use(cors());
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -25,7 +32,6 @@ if (process.env.NODE_ENV === "production") {
   });
 
 }
-
 
 // Routes
 const photo = require('./routes/photos');

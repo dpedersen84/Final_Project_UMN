@@ -10,20 +10,25 @@ import API from "../../utils/API";
 import './Question.css';
 
 class Question extends Component {
-    state = {
-        questions,
-        currentQ: questions[0].text,
-        time: new Date().toLocaleString(),
-        currentDate: moment(new Date()).format("M/DD/YYYY"),
-        search:"",
-        photo: "",
-        days: 0,
-        hours: 0,
-        min: 0,
-        sec: 0,
-        user: '',
-        userId: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: localStorage.getItem('userName'),
+            userId: localStorage.getItem('userId'),
+            token: localStorage.getItem('jwtToken'),
+            questions,
+            currentQ: questions[0].text,
+            time: new Date().toLocaleString(),
+            currentDate: moment(new Date()).format("M/DD/YYYY"),
+            search:"",
+            photo: "",
+            days: 0,
+            hours: 0,
+            min: 0,
+            sec: 0,
+        };
     };
+    
 
     getDayOfYear = () => {
         let now = new Date();
@@ -36,28 +41,25 @@ class Question extends Component {
 
     componentDidMount = () => {
 
-        // axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken');
+        if (localStorage.getItem('jwtToken')) {
+            console.log(localStorage);
+            axios.defaults.headers.common['Authorization'] = this.state.token;
+            
+            this.setState({
+                currentQ: localStorage.getItem('question') || questions[this.getDayOfYear() % (questions.length-1)].text
+            })
 
-        console.log(localStorage.getItem('userName'))
-        console.log(localStorage.getItem('userId'))
+            this.intervalID = setInterval(
+                () => this.tick(),
+                1000
+            );
+            
+            this.intervalID = setInterval(() => this.tick(), 1000);
+            this.dateID = setInterval(() => this.dateTicker(moment().add(1,'days').startOf('day')), 1000)
 
-        this.setState({
-            user: localStorage.getItem('userName'),
-            userId: localStorage.getItem('userId'), 
-            currentQ: localStorage.getItem('question') || questions[this.getDayOfYear() % (questions.length-1)].text
-        })
-
-        if (localStorage.getItem('jwtToken')===null) {
-            this.props.history.push("/login");
-        }
-
-        this.intervalID = setInterval(
-            () => this.tick(),
-            1000
-        );
-        
-        this.intervalID = setInterval(() => this.tick(), 1000);
-        this.dateID = setInterval(() => this.dateTicker(moment().add(1,'days').startOf('day')), 1000)
+        } else {
+            window.location.href ="/login"
+        };
     };
 
     // componentWillUnmount = () => {
@@ -122,7 +124,7 @@ class Question extends Component {
             .then(res => {
                 console.log(res.data.data)
                 const random = (arr) => Math.floor(Math.random() * arr.length)
-                this.setState( { photo: res.data.data[random(res.data.data)].images.original.url }, () => console.log(this.state.photo))
+                this.setState({ photo: res.data.data[random(res.data.data)].images.original.url }, () => console.log(this.state.photo))
             })
     };
 
@@ -143,12 +145,6 @@ class Question extends Component {
             localStorage.setItem('question', quest);
             this.setState({currentQ:quest})
         } 
-    };
-
-    logout = () => {
-        localStorage.removeItem('jwtToken');
-        window.location.reload();
-        console.log("Logout!")
     };
 
     handleShareButton = () => {
@@ -186,17 +182,13 @@ class Question extends Component {
                     <p className="timer text-center">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</p>
                 </Jumbotron>
                 <div className="container">
-                {/* <Nav onClick={() => this.logout()} /> */}
                     <div className="row">
-                        <div className="col-xs-1 col-md-12">
-                            {/* <h5 className="clock">{this.state.currentDate}</h5>
-                            <h5 className="timer">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</h5> */}
+                        <div className="col">
                             <h1 className="currentQuestion"> {this.state.currentQ} </h1>
                         </div>
                     </div>
-                    
                     <div className="row">
-                        <div className="col-xs-1 col-md-7 offset-md-3">
+                        <div className="col">
                             <form>
                                 <label>
                                     <input 
@@ -219,7 +211,6 @@ class Question extends Component {
                             </form>
                         </div>
                     </div>
-
                     <div className="row">
                         <div className="col-xs-1 col-md-7 offset-md-3" id="imageCard">
                             {this.state.photo.length ? 

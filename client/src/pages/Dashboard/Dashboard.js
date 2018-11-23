@@ -16,7 +16,8 @@ class Dashboard extends Component {
             userId: localStorage.getItem('userId'),
             token: localStorage.getItem('jwtToken'),
             userImages: [ ],
-            mostRecentUserImage: '',
+            selectedImage: '',
+            currentURL: '',
             name: '',
             email: '',
             imageUrl: '',
@@ -41,16 +42,22 @@ class Dashboard extends Component {
         url = `/api/images/${localStorage.getItem('userId')}`;
         axios.get(url)
             .then(res => {
-                this.setState({
-                    userImages: res.data,
-                    mostRecentUserImage: (res.data[res.data.length-1]),
-                });
-            })
-            .catch((error) => {
-                if(error.response.status === 401) {
-                    this.props.history.push("/login");
+                if(res.data.length) {
+                    this.setState({
+                        userImages: res.data,
+                        selectedImage: (res.data[res.data.length-1]),
+                        currentURL: (res.data[res.data.length-1].url),
+                        caption: (res.data[res.data.length-1].caption),
+                    });
+                } else {
+                    this.setState({
+                        userImages: '',
+                        selectedImage: '',
+                        currentURL: '',
+                        caption: '',
+                    });
                 }
-            });
+            })
     };
 
     getUserInfo = () => {
@@ -82,7 +89,7 @@ class Dashboard extends Component {
             caption: this.state.caption
         };
 
-        axios.put(`/api/images/${this.state.mostRecentUserImage._id}`, captionObject)
+        axios.put(`/api/images/${this.state.selectedImage._id}`, captionObject)
             .then(res => {
                 console.log(res);
             });
@@ -91,6 +98,11 @@ class Dashboard extends Component {
 
     questionPageLoad = () => {
         window.location.href="/question";
+    };
+
+    changeImage = (url, caption) => {
+        this.setState({currentURL: url});
+        this.setState({caption: caption});
     };
 
     render() {
@@ -112,14 +124,15 @@ class Dashboard extends Component {
                             <p>Id: {this.state.userId}</p>
                         </div>
                         <div className="col-6">
-                            <h2>Most Recent Shared Photo</h2>&nbsp;
-                            <img className="img-fluid" src={this.state.mostRecentUserImage.url} style={{height: 300}} alt="Daily"></img>
-                            <h3>{this.state.mostRecentUserImage.caption}</h3>
+                            {/* <h2>Selected Image</h2>&nbsp; */}&nbsp;
+                            {/* <img className="img-fluid" src={this.state.selectedImage.url} style={{height: 300}} alt="Daily"></img> */}
+                            <img className="img-fluid" src={this.state.currentURL} style={{height: 300}} alt="Daily"></img>
+                            <h3>{this.state.caption}</h3>
                         </div>
                         <div className="col ">
                             <h2>All Photos</h2>&nbsp;
                             {this.state.userImages.map(image => 
-                                <img className="img-fluid" src={image.url} key={image._id} alt="All"></img>
+                                <img className="img-fluid" src={image.url} key={image._id} onClick={()=>this.changeImage(image.url, image.caption)}alt="All"></img>
                             )}
                         </div>
                     </div>

@@ -19,8 +19,11 @@ const UserSchema = new Schema({
         require: false,
         unique: false
     },
-    likedPhotos:{
-        type: []
+    name : {
+        type: String,
+    },
+    email: {
+        type: String
     }
 });
 
