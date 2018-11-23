@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
-// import Nav from "../../components/Nav";
 import Jumbotron from "../../components/Jumbotron";
-// import ImageCard from "../../components/ImageCard/ImageCard";
-// import { Input, FormBtn } from "../../components/Form";
-// import { relative } from "path";
-// import CommentForm from "../../components/CommentForm";
-// import './Dashboard.css';
+import { Input, FormBtn } from "../../components/Form";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -23,6 +18,7 @@ class Dashboard extends Component {
             imageUrl: '',
             imageId: '',
             caption: '',
+            newCaption: '',
         };
     };
 
@@ -79,17 +75,19 @@ class Dashboard extends Component {
 
     handleInputChange = event => {
         event.preventDefault();
-        this.setState({caption: event.target.value})
+        this.setState({newCaption: event.target.value})
     };
 
     handleFormSubmit = (event) => {
         event.preventDefault();
         
         let captionObject = {
-            caption: this.state.caption
+            caption: this.state.newCaption
         };
 
-        axios.put(`/api/images/${this.state.selectedImage._id}`, captionObject)
+        console.log(captionObject)
+        console.log(this.state.imageId)
+        axios.put(`/api/images/${this.state.imageId}`, captionObject)
             .then(res => {
                 console.log(res);
             });
@@ -100,9 +98,10 @@ class Dashboard extends Component {
         window.location.href="/question";
     };
 
-    changeImage = (url, caption) => {
+    changeImage = (url, caption, id) => {
         this.setState({currentURL: url});
         this.setState({caption: caption});
+        this.setState({imageId: id});
     };
 
     render() {
@@ -124,37 +123,29 @@ class Dashboard extends Component {
                             <p>Id: {this.state.userId}</p>
                         </div>
                         <div className="col-6">
-                            {/* <h2>Selected Image</h2>&nbsp; */}&nbsp;
-                            {/* <img className="img-fluid" src={this.state.selectedImage.url} style={{height: 300}} alt="Daily"></img> */}
                             <img className="img-fluid" src={this.state.currentURL} style={{height: 300}} alt="Daily"></img>
                             <h3>{this.state.caption}</h3>
-                        </div>
-                        <div className="col ">
-                            <h2>All Photos</h2>&nbsp;
-                            {this.state.userImages.map(image => 
-                                <img className="img-fluid" src={image.url} key={image._id} onClick={()=>this.changeImage(image.url, image.caption)}alt="All"></img>
-                            )}
-                        </div>
-                    </div>
-                    {/* <div className="row">
-                        <div className="col"></div>
-                        <div className="col-6">
                             <form> 
                                 <Input
-                                    value={this.state.caption}
+                                    value={this.state.newCaption}
                                     onChange={this.handleInputChange}
                                     placeholder="Update Caption"
                                 />
                                 <FormBtn 
-                                    disabled={!(this.state.caption)}
+                                    disabled={!(this.state.newCaption)}
                                     onClick={this.handleFormSubmit}    
                                 >
                                     Submit
                                 </FormBtn>
                             </form>
                         </div>
-                        <div className="col"></div>
-                    </div> */}
+                        <div className="col ">
+                            <h2>All Photos</h2>&nbsp;
+                            {this.state.userImages.map(image => 
+                                <img className="img-fluid" src={image.url} key={image._id} onClick={()=>this.changeImage(image.url, image.caption, image._id)}alt="All"></img>
+                            )}
+                        </div>
+                    </div>
                 </div>
                 ) : (
                 <div className="container">
