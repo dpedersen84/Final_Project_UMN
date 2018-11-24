@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// import './App.css';
 import Navbar from './components/Navbar';
 import Question from './pages/Question';
 import Wrapper from "./components/Wrapper";
-import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Global from './pages/Global/Global';
+import Global from './pages/Global';
+import About from './pages/About'
 
 const App = () => (
   <Router>
@@ -20,6 +20,7 @@ const App = () => (
           <Route exact path="/question" component={Question} />
           <Route exact path="/global" component={Global} />
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/about" component={About} />
         </Switch>
     </Wrapper>
   </Router> 

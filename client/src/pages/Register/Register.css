@@ -1,3 +1,29 @@
+#image-preview {
+    height: 200px;
+    width: 200px;
+    border: none;
+}
+
+#submit-btn {
+    /*background-color: transparent;
+    color: coral;*/
+    background-color: lightsalmon;
+    border-color: transparent;
+}
+
+#submit-btn:hover {
+	background-color: coral;
+}
+
 #submit-btn {
 	margin-bottom: 20px;
 }
+
+#link {
+    color: coral;
+}
+
+#link:hover {
+	color: lightsalmon;
+}
+
