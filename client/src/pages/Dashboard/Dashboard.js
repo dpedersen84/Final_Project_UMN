@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import Jumbotron from "../../components/Jumbotron";
-import { Input, FormBtn } from "../../components/Form";
+import { Input } from "../../components/Form";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -84,9 +84,7 @@ class Dashboard extends Component {
         let captionObject = {
             caption: this.state.newCaption
         };
-
-        console.log(captionObject)
-        console.log(this.state.imageId)
+        
         axios.put(`/api/images/${this.state.imageId}`, captionObject)
             .then(res => {
                 console.log(res);
@@ -123,7 +121,13 @@ class Dashboard extends Component {
                             <p>Id: {this.state.userId}</p>
                         </div>
                         <div className="col-6">
-                            <img className="img-fluid" src={this.state.currentURL} style={{height: 300}} alt="Daily"></img>
+                            <img 
+                                className="img-fluid" 
+                                src={this.state.currentURL} 
+                                style={{height: 300}} 
+                                alt="Daily"
+                            >
+                            </img>
                             <h3>{this.state.caption}</h3>
                             <form> 
                                 <Input
@@ -131,18 +135,25 @@ class Dashboard extends Component {
                                     onChange={this.handleInputChange}
                                     placeholder="Update Caption"
                                 />
-                                <FormBtn 
+                                <button
+                                    className="btn btn-danger" 
                                     disabled={!(this.state.newCaption)}
                                     onClick={this.handleFormSubmit}    
                                 >
                                     Submit
-                                </FormBtn>
+                                </button>
                             </form>
                         </div>
                         <div className="col ">
                             <h2>All Photos</h2>&nbsp;
                             {this.state.userImages.map(image => 
-                                <img className="img-fluid" src={image.url} key={image._id} onClick={()=>this.changeImage(image.url, image.caption, image._id)}alt="All"></img>
+                                <img 
+                                    className="img-fluid" 
+                                    src={image.url} key={image._id} 
+                                    onClick={()=>this.changeImage(image.url, image.caption, image._id)}
+                                    alt="All"
+                                >
+                                </img>
                             )}
                         </div>
                     </div>

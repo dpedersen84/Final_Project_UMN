@@ -6,8 +6,12 @@ class Navbar extends React.Component {
     logout = () => {
         localStorage.removeItem('jwtToken');
         localStorage.removeItem('userId');
-        window.location.reload();
-    }
+        window.location.href='/login';
+    };
+
+    goToLogin = () => {
+        window.location.href="/login";
+    };
 
     render() {
         return( 
@@ -49,9 +53,9 @@ class Navbar extends React.Component {
                     <ul className="navbar-nav flex-row justify-content-center flex-nowrap">
                         <li className="nav-item">
                             {localStorage.getItem('jwtToken') ? (
-                                <button className="btn" onClick={this.logout}>Logout</button>
+                                <button className="btn btn-danger" onClick={this.logout}>Logout</button>
                             ) : (
-                                <button className="btn" href="/login">Login</button>
+                                <button className="btn btn-danger" onClick={this.goToLogin}>Login</button>
                             )}
                         </li>
                     </ul>

@@ -1,1 +1,1 @@
-export { default } from "./GlobalPage";
+export { default } from "./Global";

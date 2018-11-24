@@ -10,20 +10,24 @@ import API from "../../utils/API";
 import './Question.css';
 
 class Question extends Component {
-    state = {
-        questions,
-        currentQ: questions[0].text,
-        time: new Date().toLocaleString(),
-        currentDate: moment(new Date()).format("M/DD/YYYY"),
-        search:"",
-        photo: "",
-        days: 0,
-        hours: 0,
-        min: 0,
-        sec: 0,
-        user: '',
-        userId: ''
-    };
+    constructor(props) {
+        super(props)
+        this.state = {
+            questions,
+            currentQ: questions[0].text,
+            time: new Date().toLocaleString(),
+            currentDate: moment(new Date()).format("M/DD/YYYY"),
+            search:"",
+            photo: "",
+            days: 0,
+            hours: 0,
+            min: 0,
+            sec: 0,
+            user: '',
+            userId: ''
+        };
+    }
+    
 
     getDayOfYear = () => {
         let now = new Date();
@@ -60,14 +64,13 @@ class Question extends Component {
         this.dateID = setInterval(() => this.dateTicker(moment().add(1,'days').startOf('day')), 1000)
     };
 
-    // componentWillUnmount = () => {
+    componentWillUnmount = () => {
     //     clearInterval(this.intervalID);
-    //     clearInterval(this.dateID)
-    // };
+        clearInterval(this.dateID)
+    };
 
     stop = () => {
-        clearInterval(this.dateID)
-        // make pretty things appear
+        clearInterval(this.dateID);
     };
 
     dateTicker = (midnight) => {
@@ -178,15 +181,11 @@ class Question extends Component {
     render() {
         return (
             <div>
-                <Jumbotron>
-                    <h1 className='text-center'>Welcome to the Daily Question.</h1>&nbsp;
-                    <h4 className='text-center'>Here you will find the question of the day!</h4>&nbsp;
-                    <h4 className='text-center'>Answer quick! Question resets every 24 hours!</h4>&nbsp;
-                    {/* <p className="clock">{this.state.currentDate}</p> */}
-                    <p className="timer text-center">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</p>
-                </Jumbotron>
+                <Jumbotron
+                    backgroundImage="https://i.imgur.com/atMSQTA.jpg"
+                />
                 <div className="container">
-                {/* <Nav onClick={() => this.logout()} /> */}
+                <p className="timer text-center">{this.state.hours} Hours {this.state.min} Minutes {this.state.sec} Seconds Remaining!</p>
                     <div className="row">
                         <div className="col-xs-1 col-md-12">
                             {/* <h5 className="clock">{this.state.currentDate}</h5>
@@ -194,7 +193,6 @@ class Question extends Component {
                             <h1 className="currentQuestion"> {this.state.currentQ} </h1>
                         </div>
                     </div>
-                    
                     <div className="row">
                         <div className="col-xs-1 col-md-7 offset-md-3">
                             <form>
@@ -219,7 +217,6 @@ class Question extends Component {
                             </form>
                         </div>
                     </div>
-
                     <div className="row">
                         <div className="col-xs-1 col-md-7 offset-md-3" id="imageCard">
                             {this.state.photo.length ? 
@@ -232,7 +229,6 @@ class Question extends Component {
                             } 
                         </div>
                     </div>
-                    
                 </div>
             </div>
         )};
