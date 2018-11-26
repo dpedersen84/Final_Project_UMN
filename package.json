@@ -1,17 +1,20 @@
 {
   "name": "pic-me",
   "version": "1.0.0",
-  "description": "",
+  "description": "A picture sharing application",
   "main": "server.js",
+  "engines": {
+    "node": "8.11.1"
+  },
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node server.js",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
-    "client": "cd client && npm run start",
+    "client": "node scripts/start-client.js",
     "seed": "node scripts/seedDB.js",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
@@ -37,5 +40,10 @@
     "popper.js": "^1.14.3",
     "tooltip.js": "^1.2.0",
     "uploadcare-widget": "^3.5.1"
+  },
+  "root": "build/",
+  "clean_urls": false,
+  "routes": {
+    "/**": "index.html"
   }
 }
