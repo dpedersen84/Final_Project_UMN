@@ -1,40 +1,53 @@
 const express = require("express");
-const path = require("path");
-const passport = require("passport");
-require("./config/passport");
-const bodyParser = require("body-parser");
-const logger = require("morgan");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const path = require("path");
 
-// Port
-const PORT = process.env.PORT || 3001;
-
-// Routes
-const photo = require('./routes/photos');
-const auth = require('./routes/auth');
+const pics = require("./routes/api/pics");
+const users = require("./routes/api/users");
+const profile = require("./routes/api/profile");
 
 // Initialize Express
 const app = express();
 
-app.use(logger("dev"));
+// Body parser middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/api/images', passport.authenticate('jwt', {session: false}), photo);
-app.use('/api/auth', auth);
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Connect to the Mongo database
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/PicMedb";
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/PicMedb";
 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
-  .then(() =>  console.log('Connected to MongoDB'))
-  .catch((err) => console.error(err));
+mongoose
+  .connect(
+    MONGODB_URI,
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(err => console.error(err));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-});
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport config
+require("./config/passport")(passport);
+
+// Routes
+app.use("/api/users", users);
+app.use("/api/pics", pics);
+app.use("/api/profile", profile);
+
+// Production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client", "build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+}
+
+// Port
+const PORT = process.env.PORT || 3001;
 
 // Start the server
-app.listen(PORT, function() {
-  console.log("App Running on Port " + PORT + "!");
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
