@@ -4,6 +4,9 @@ Pic-Me is an app that allows a user to answer a random question and find a rando
 
 [Application](https://pic-me-dp.herokuapp.com/)
 
+## Disclaimer
+Do not clone this repo, currently under a refactor and may not work correctly
+
 ## Getting Started
 
 ### Prerequisites
